@@ -1,7 +1,16 @@
-<h3>{{ title }}</h3>
+<div class="card bg-white/90 backdrop-blur-sm w-full max-w-md mx-auto p-8 mt-8 shadow-2xl shadow-rose-200/30 border border-rose-100/50 rounded-3xl">
+  <h3 class="text-3xl font-light text-rose-400 mb-2 tracking-tight">{{ title }}</h3>
+  <ul class="list space-y-3">
+    @for (member of members(); track member.id) {
+      <li class="list-row items-center gap-4 p-3 rounded-2xl hover:bg-rose-50/70 transition-all duration-300">
+        <img src="/user.png" alt="user avatar" class="size-14 rounded-full ring-2 ring-rose-200/50 ring-offset-2">
+        <div class="font-medium text-stone-700">
+          {{member.displayName}}
+        </div>
+      </li>
+    }
+  </ul>
+</div>
 
-<ul>
-  @for (member of members(); track member.id) {
-    <li>{{member.id}} - {{member.displayName}}</li>
-  }
-</ul>
+
+
