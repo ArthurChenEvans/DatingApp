@@ -1,11 +1,13 @@
 using API.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace API.Data;
 
-public class AppDbContext(DbContextOptions options) : IdentityDbContext<AppUser>(options)
+public class AppDbContext : DbContext
 {
-    
+    public AppDbContext(DbContextOptions options) : base(options)
+    {
+        
+    }
     public DbSet<AppUser> Users { get; set; }
 };
