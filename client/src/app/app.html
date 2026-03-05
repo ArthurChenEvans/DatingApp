@@ -1,17 +1,18 @@
-<div class="card bg-base-100 w-1/2 mx-auto p-10 mt-10 shadow-xl">
-  <h3 class="text-3xl text-red-500">{{ title }}</h3>
-  <ul class="list">
+<div class="card bg-gradient-to-br from-base-100 to-base-200 w-11/12 md:w-1/2 mx-auto mt-10 shadow-2xl border border-base-300 overflow-hidden">
+  <div class="p-8 pb-6">
+    <div class="flex items-center gap-3">
+      <h3 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-rose-400">{{ title }}</h3>
+    </div>
+  </div>
+
+  <ul class="list bg-base-100/50 px-8 py-4">
     @for (member of members(); track member.id) {
-      <li class="list-row items-center">
-        <img src="/user.png" alt="user avatar" class="size-12 rounded-box">
-        <div>
+      <li class="flex items-center gap-4 py-4 border-b border-base-200 last:border-b-0">
+        <img src="/user.png" alt="user avatar" class="size-14 rounded-2xl ring-2 ring-pink-400/30 ring-offset-2 ring-offset-base-100">
+        <div class="font-semibold text-lg text-base-content">
           {{member.displayName}}
         </div>
       </li>
     }
   </ul>
 </div>
-
-
-
-
