@@ -12,9 +12,30 @@
       <a class="btn btn-ghost btn-sm rounded-full text-base-content hover:text-pink-400 hover:bg-pink-400/10">Messages</a>
     </div>
   </div>
-  <div class="flex-none flex items-center gap-2">
-    <input type="email" placeholder="Email" class="input input-sm input-bordered bg-base-200 w-32 md:w-auto" />
-    <input type="password" placeholder="Password" class="input input-sm input-bordered bg-base-200 w-32 md:w-auto" />
-    <button class="btn btn-sm btn-primary bg-gradient-to-r from-pink-400 to-rose-400 border-0 text-white hover:from-pink-500 hover:to-rose-500">Login</button>
-  </div>
+  @if (accountService.currentUser(); as user) {
+    <div class="flex-none flex items-center gap-2">
+      <span class="text-sm bg-gradient-to-r from-pink-400 to-rose-400 bg-clip-text text-transparent">Welcome, {{ user.displayName }}</span>
+      <button
+        (click)="logout()"
+        class="btn btn-sm btn-ghost rounded-full text-bbase-content hover:text-pink-400 hover:bg-pink-400/10">
+        Logout
+      </button>
+    </div>
+  } @else {
+    <form #loginForm="ngForm" (ngSubmit)="login()" class="flex-none flex items-center gap-2">
+      <input
+        [(ngModel)]="creds.email"
+        name="email"
+        type="email"
+        placeholder="Email"
+        class="input input-sm input-bordered bg-base-200 w-32 md:w-auto" />
+      <input
+        [(ngModel)]="creds.password"
+        name="password"
+        type="password"
+        placeholder="Password"
+        class="input input-sm input-bordered bg-base-200 w-32 md:w-auto" />
+      <button type="submit" class="btn btn-sm btn-primary bg-gradient-to-r from-pink-400 to-rose-400 border-0 text-white hover:from-pink-500 hover:to-rose-500">Login</button>
+    </form>
+  }
 </nav>

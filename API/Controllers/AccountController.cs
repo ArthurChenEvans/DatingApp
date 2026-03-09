@@ -5,8 +5,6 @@ using API.DTOs;
 using API.Entities;
 using API.Extensions;
 using API.Interfaces;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,7 +23,6 @@ public class AccountController(AppDbContext context, ITokenService tokenService)
         {
             DisplayName = registerDTO.DisplayName,
             Email = registerDTO.Email,
-            UserName = registerDTO.Username,
             PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDTO.Password)),
             PasswordSalt = hmac.Key
         };

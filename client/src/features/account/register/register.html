@@ -1,0 +1,43 @@
+<div class="max-w-md w-full">
+  <h2 class="text-3xl font-bold mb-6 text-primary">Create Account</h2>
+
+  <form #registerForm="ngForm" (ngSubmit)="register()" class="space-y-4">
+    <input
+      [(ngModel)]="creds.displayName"
+      name="username"
+      type="text"
+      placeholder="Username"
+      class="input input-bordered w-full bg-base-100"
+      required />
+
+    <input
+      [(ngModel)]="creds.email"
+      name="email"
+      type="email"
+      placeholder="Email"
+      class="input input-bordered w-full bg-base-100"
+      required />
+
+    <input
+      [(ngModel)]="creds.password"
+      name="password"
+      type="password"
+      placeholder="Password"
+      class="input input-bordered w-full bg-base-100"
+      required />
+
+    <div class="flex gap-4 mt-6">
+      <button
+        type="submit"
+        class="btn btn-primary bg-gradient-to-r from-pink-400 to-rose-400 border-0 text-white hover:from-pink-500 hover:to-rose-500 flex-1">
+        Register
+      </button>
+      <button
+        type="button"
+        (click)="cancel()"
+        class="btn btn-outline btn-primary flex-1">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
