@@ -1,16 +1,8 @@
 <app-nav />
 
-<app-home />
-
-<div class="card bg-gradient-to-br from-base-100 to-base-200 w-11/12 md:w-1/2 mx-auto mt-10 shadow-2xl border border-base-300 overflow-hidden">
-  <ul class="list bg-base-100/50 px-8 py-4">
-    @for (member of members(); track member.id) {
-      <li class="flex items-center gap-4 py-4 border-b border-base-200 last:border-b-0">
-        <img src="/user.png" alt="user avatar" class="size-14 rounded-2xl ring-2 ring-pink-400/30 ring-offset-2 ring-offset-base-100">
-        <div class="font-semibold text-lg text-base-content">
-          {{member.displayName}}
-        </div>
-      </li>
-    }
-  </ul>
+<div
+  [class.mt-24]="router.url !== '/'"
+  [class.container]="router.url !== '/'"
+  [class.mx-auto]="router.url !== '/'">
+  <router-outlet />
 </div>
