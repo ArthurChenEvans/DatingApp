@@ -1,0 +1,46 @@
+<div class="p-8 max-w-4xl mx-auto">
+  <h2 class="text-2xl font-bold mb-6 text-primary">Error Testing</h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <button
+      (click)="get404Error()"
+      class="btn btn-outline btn-warning">
+      404 Not Found
+    </button>
+
+    <button
+      (click)="get400Error()"
+      class="btn btn-outline btn-warning">
+      400 Bad Request
+    </button>
+
+    <button
+      (click)="get500Error()"
+      class="btn btn-outline btn-error">
+      500 Server Error
+    </button>
+
+    <button
+      (click)="get401Error()"
+      class="btn btn-outline btn-error">
+      401 Unauthorized
+    </button>
+
+    <button
+      (click)="get400ValidationError()"
+      class="btn btn-outline btn-warning md:col-span-2 lg:col-span-1">
+      400 Validation Error
+    </button>
+  </div>
+
+</div>
+
+@if (validationErrors().length > 0) {
+  <div class="card bg-base-100 flex mt-5 rounded-2xl w-1/2 p-3 mx-auto">
+    <ul class="flex flex-col text-red-600 space-y-2">
+      @for (error of validationErrors(); track $index) {
+        <li>{{error}}</li>
+      }
+    </ul>
+  </div>
+}
