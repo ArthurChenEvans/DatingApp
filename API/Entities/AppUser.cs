@@ -7,4 +7,6 @@ public class AppUser
     public required string DisplayName { get; set; }
     public required byte[] PasswordHash { get; set; }
     public required byte[] PasswordSalt { get; set; }
+    
+    public Member Member { get; set; } = null!;
 }
