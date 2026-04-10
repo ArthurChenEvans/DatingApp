@@ -1,0 +1,15 @@
+@if (member(); as member) {
+<div routerLink="/members/{{member.id}}"
+  class="card relative bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer">
+  <figure class="relative">
+    <img [src]="member.imageUrl || '/user.png'" [alt]="member.displayName"
+      class="w-full h-64 object-cover rounded-t-lg" />
+    <div class="absolute bottom-0 w-full bg-gradient-to-t from-black/80 to-transparent px-4 py-3 rounded-b-lg">
+      <div class="flex justify-between items-end">
+        <span class="font-semibold text-white text-lg">{{ member.displayName }}, {{ member.dateOfBirth | age }}</span>
+        <span class="text-sm text-white/80">{{ member.city }}</span>
+      </div>
+    </div>
+  </figure>
+</div>
+}
