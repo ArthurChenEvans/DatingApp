@@ -3,20 +3,23 @@ using API.DTOs;
 using API.Entities;
 using API.Interfaces;
 using API.Extensions;
+using API.Helpers;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers;
 
 public class MembersController(IMemberRepository memberRepository,
-    IPhotoService photoService) : BaseApiController
+    IPhotoService photoService, AppDbContext context) : BaseApiController
 {
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyList<Member>>> Get()
+    public async Task<ActionResult<IReadOnlyList<Member>>> Get([FromQuery] MemberParams memberParams)
     {
-        return Ok(await memberRepository.GetMembersAsync());
+        memberParams.CurrentMemberId = User.GetMemberId();
 
+        return Ok(await memberRepository.GetMembersAsync(memberParams));
     }
 
     [Authorize]
@@ -49,6 +52,11 @@ public class MembersController(IMemberRepository memberRepository,
         member.Description = memberUpdateDto.Description ?? member.Description;
         member.City = memberUpdateDto.City ?? member.City;
         member.Country = memberUpdateDto.Country ?? member.Country;
+        
+        if (member.User != null && member.User.DisplayName != member.DisplayName)
+        {
+            member.User.DisplayName = member.DisplayName;
+        }
 
         memberRepository.Update(member);
 

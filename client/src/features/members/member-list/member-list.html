@@ -1,21 +1,28 @@
-<div class="container mx-auto p-8">
-  <h2 class="text-3xl font-bold text-primary mb-8">Members</h2>
-
-  @if (members$ | async; as members) {
-    @if (members.length === 0) {
-      <div class="text-center py-12">
-        <p class="text-gray-500 text-lg">No members found</p>
+@if (paginatedMembers(); as paginatedResult) {
+<div class="flex flex-col w-full">
+  <div class="flex justify-between items-center">
+    <div class="flex gap-3 items-center">
+      <button (click)="openModal()" class="btn btn-primary">Select Filters</button>
+      <button (click)="resetFilters()" class="btn btn-neutral">Reset Filters</button>
+      <div class="text-lg bg-base-100 py-2 px-4 border-1 rounded-lg text-primary capitalize">
+        {{displayMessage}}
       </div>
-    } @else {
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        @for (member of members$ | async; track member.id) {
-          <app-member-card [member]="member" />
-        }
-      </div>
-    }
-  } @else {
-    <div class="flex justify-center py-12">
-      <span class="loading loading-spinner loading-lg text-primary"></span>
     </div>
+    @if (paginatedResult.metadata; as metadata) {
+    <app-paginator [pageNumber]="metadata.currentPage" [totalCount]="metadata.totalCount"
+      [totalPages]="metadata.totalPages" [pageSize]="metadata.pageSize" (pageChange)="onPageChange($event)" />
+    }
+  </div>
+
+  @if (paginatedResult.items; as members) {
+  <div class="grid grid-cols-5 gap-6">
+    @for (member of members; track member.id) {
+    <app-member-card [member]="member" />
+    }
+  </div>
   }
 </div>
+}
+
+<app-filter-modal #filterModal [hidden]="!paginatedMembers()" (closeModal)="onClose()"
+  (submitData)="onFilterChange($event)" [memberParams]="memberParams" />

@@ -23,8 +23,7 @@ export class AccountService {
     );
   }
 
-  login(creds: LoginCreds)
-  {
+  login(creds: LoginCreds) {
     return this.http.post<User>(this.baseUrl + 'account/login', creds).pipe(
       tap(user => {
         if (user) {
@@ -41,6 +40,7 @@ export class AccountService {
 
   logout() {
     localStorage.removeItem('user');
+    localStorage.removeItem('filters');
     this.currentUser.set(null);
   }
 }
