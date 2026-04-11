@@ -1,5 +1,5 @@
-@if (member(); as member) {
-<div class="flex flex-col gap-3">
+@if (memberService.member(); as member) {
+<div class="flex flex-col gap-4">
   <div class="flex gap-3">
     <span class="font-semibold">Member since:</span>
     <span>{{member.created | date: 'longDate'}}</span>
@@ -8,7 +8,52 @@
     <span class="font-semibold">Last active: </span>
     <span>{{member.lastActive | date: 'dd MMM yyyy h:mm a'}}</span>
   </div>
-  <h3 class="text-lg font-semibold text-primary">About {{member.displayName}}</h3>
-  <div>{{member.description}}</div>
+  <h3 class="text-xl font-semibold text-primary">About {{member.displayName}}</h3>
+
+  @if (memberService.editMode()) {
+  <form #editForm="ngForm" (ngSubmit)="updateProfile()" class="flex flex-col gap-5">
+    <div class="form-control">
+      <label class="label pb-2">
+        <span class="label-text text-base font-semibold">Display Name</span>
+      </label>
+      <input type="text" class="input input-bordered w-full text-base" [(ngModel)]="editableMember.displayName"
+        name="displayName" required />
+    </div>
+
+    <div class="form-control">
+      <label class="label pb-2">
+        <span class="label-text text-base font-semibold">Description</span>
+      </label>
+      <textarea class="textarea textarea-bordered w-full h-32 text-base" [(ngModel)]="editableMember.description"
+        name="description"></textarea>
+    </div>
+
+    <div class="form-control">
+      <label class="label pb-2">
+        <span class="label-text text-base font-semibold">City</span>
+      </label>
+      <input type="text" class="input input-bordered w-full text-base" [(ngModel)]="editableMember.city" name="city"
+        required />
+    </div>
+
+    <div class="form-control">
+      <label class="label pb-2">
+        <span class="label-text text-base font-semibold">Country</span>
+      </label>
+      <input type="text" class="input input-bordered w-full text-base" [(ngModel)]="editableMember.country"
+        name="country" required />
+    </div>
+
+    <div class="mt-2">
+      <button type="submit"
+        class="btn btn-primary bg-gradient-to-r from-pink-400 to-rose-400 border-0 text-white hover:from-pink-500 hover:to-rose-500 disabled:opacity-50 disabled:cursor-not-allowed"
+        [disabled]="!editForm.dirty">
+        Save Changes
+      </button>
+    </div>
+  </form>
+  } @else {
+  <div class="text-base">{{member.description}}</div>
+  }
 </div>
 }

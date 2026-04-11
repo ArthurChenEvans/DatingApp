@@ -8,43 +8,49 @@
           d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
       </svg>
       DatingApp</a>
-    <div class="flex-none hidden md:flex gap-2">
+    <nav class="flex-none hidden md:flex gap-2">
       @if (accountService.currentUser())
       {
       <a routerLink="/members" routerLinkActive="text-pink-400 bg-pink-400/10"
-        class="btn btn-ghost btn-sm rounded-full text-base-content hover:text-pink-400 hover:bg-pink-400/10"
+        class="btn btn-ghost btn-md rounded-full text-base-content hover:text-pink-400 hover:bg-pink-400/10 text-lg"
         [routerLinkActiveOptions]="{exact: true}">Matches</a>
       <a routerLink="/lists" routerLinkActive="text-pink-400 bg-pink-400/10"
-        class="btn btn-ghost btn-sm rounded-full text-base-content hover:text-pink-400 hover:bg-pink-400/10">Lists</a>
+        class="btn btn-ghost btn-md rounded-full text-base-content hover:text-pink-400 hover:bg-pink-400/10 text-lg">Lists</a>
       <a routerLink="/messages" routerLinkActive="text-pink-400 bg-pink-400/10"
-        class="btn btn-ghost btn-sm rounded-full text-base-content hover:text-pink-400 hover:bg-pink-400/10">Messages</a>
+        class="btn btn-ghost btn-md rounded-full text-base-content hover:text-pink-400 hover:bg-pink-400/10 text-lg">Messages</a>
       <a routerLink="/errors" routerLinkActive="text-pink-400 bg-pink-400/10"
-        class="btn btn-ghost btn-sm rounded-full text-base-content hover:text-pink-400 hover:bg-pink-400/10">Errors</a>
+        class="btn btn-ghost btn-md rounded-full text-base-content hover:text-pink-400 hover:bg-pink-400/10 text-lg">Errors</a>
       }
-    </div>
+      @if (busyService.busyRequestCount() > 0) {
+      <span class="loading loading-spinner text-accent"></span>
+      }
+    </nav>
+
   </div>
   @if (accountService.currentUser(); as user) {
-  <div class="flex-none flex items-center gap-3">
-    <div class="avatar">
-      <div class="w-8 h-8 rounded-full">
-        <img [src]="user.imageUrl || '/user.png'" alt="User avatar">
+  <div class="flex-none dropdown dropdown-end dropdown-hover">
+    <div tabindex="0" role="button" class="btn btn-ghost rounded-full flex items-center gap-3 px-3 py-2">
+      <div class="avatar">
+        <div class="w-10 h-10 rounded-full">
+          <img [src]="user.imageUrl || '/user.png'" alt="User avatar">
+        </div>
       </div>
+      <span class="text-xl font-semibold">{{ user.displayName }}</span>
     </div>
-    <span class="text-sm bg-gradient-to-r from-pink-400 to-rose-400 bg-clip-text text-transparent">Welcome, {{
-      user.displayName }}</span>
-    <button (click)="logout()"
-      class="btn btn-sm btn-ghost rounded-full text-base-content hover:text-pink-400 hover:bg-pink-400/10">
-      Logout
-    </button>
+    <ul tabindex="0"
+      class="dropdown-content menu bg-base-100 rounded-box z-[1] w-56 p-2 shadow-lg border border-base-300">
+      <li><a routerLink="/members/{{user.id}}" class="text-base py-3 hover:text-pink-400">Edit Profile</a></li>
+      <li><a (click)="logout()" class="text-base py-3 hover:text-pink-400">Logout</a></li>
+    </ul>
   </div>
   } @else {
   <form #loginForm="ngForm" (ngSubmit)="login()" class="flex-none flex items-center gap-2">
     <input [(ngModel)]="creds.email" name="email" type="email" placeholder="Email"
-      class="input input-sm input-bordered bg-base-200 w-32 md:w-auto" />
+      class="input input-md input-bordered bg-base-200 w-32 md:w-auto" />
     <input [(ngModel)]="creds.password" name="password" type="password" placeholder="Password"
-      class="input input-sm input-bordered bg-base-200 w-32 md:w-auto" />
+      class="input input-md input-bordered bg-base-200 w-32 md:w-auto" />
     <button type="submit"
-      class="btn btn-sm btn-primary bg-gradient-to-r from-pink-400 to-rose-400 border-0 text-white hover:from-pink-500 hover:to-rose-500">Login</button>
+      class="btn btn-md btn-primary bg-gradient-to-r from-pink-400 to-rose-400 border-0 text-white hover:from-pink-500 hover:to-rose-500 text-xl">Login</button>
   </form>
   }
 </nav>
