@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260411165332_ConvertPhotoIdToInt")]
-    partial class ConvertPhotoIdToInt
+    [Migration("20260411184612_LikeEntityAdded")]
+    partial class LikeEntityAdded
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -95,6 +95,21 @@ namespace API.Migrations
                     b.ToTable("Members");
                 });
 
+            modelBuilder.Entity("API.Entities.MemberLike", b =>
+                {
+                    b.Property<string>("SourceMemberId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("TargetMemberId")
+                        .HasColumnType("text");
+
+                    b.HasKey("SourceMemberId", "TargetMemberId");
+
+                    b.HasIndex("TargetMemberId");
+
+                    b.ToTable("MemberLike");
+                });
+
             modelBuilder.Entity("API.Entities.Photo", b =>
                 {
                     b.Property<int>("Id")
@@ -132,6 +147,25 @@ namespace API.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("API.Entities.MemberLike", b =>
+                {
+                    b.HasOne("API.Entities.Member", "SourceMember")
+                        .WithMany("LikedMembers")
+                        .HasForeignKey("SourceMemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API.Entities.Member", "TargetMember")
+                        .WithMany("LikedByMembers")
+                        .HasForeignKey("TargetMemberId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("SourceMember");
+
+                    b.Navigation("TargetMember");
+                });
+
             modelBuilder.Entity("API.Entities.Photo", b =>
                 {
                     b.HasOne("API.Entities.Member", "Member")
@@ -151,6 +185,10 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Entities.Member", b =>
                 {
+                    b.Navigation("LikedByMembers");
+
+                    b.Navigation("LikedMembers");
+
                     b.Navigation("Photos");
                 });
 #pragma warning restore 612, 618
