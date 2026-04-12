@@ -1,4 +1,4 @@
-# 💘 Dating App
+# 💘 Real-time Dating App
 
 A full-stack dating application built with **.NET Web API**, **Angular**, and **SignalR**.
 Browse members, send likes, chat in real time, and manage your profile — all in a modern dark-themed SPA.
