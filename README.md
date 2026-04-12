@@ -73,7 +73,7 @@ Browse members, send likes, chat in real time, and manage your profile — all i
 ![Male only](images/readme/male-only.png)
 
 ### Likes — Who You Like
-![Members you have liked](images/readme/liking-example.png)
+![Members you have liked](images/readme/liked-example.png)
 
 ### Likes — Who Liked You
 ![Members who liked you](images/readme/liked-me.png)
@@ -94,9 +94,6 @@ Browse members, send likes, chat in real time, and manage your profile — all i
 
 ### Profile — Photos
 ![Profile photo management](images/readme/profile-photos.png)
-
-### Liked Example
-![Liked state example](images/readme/liked-example.png)
 
 ### Admin — User Management
 ![Admin user management panel](images/readme/admin%20user%20management.png)
