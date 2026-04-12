@@ -18,9 +18,11 @@
         class="btn btn-ghost btn-md rounded-full text-base-content hover:text-pink-400 hover:bg-pink-400/10 text-lg">Lists</a>
       <a routerLink="/messages" routerLinkActive="text-pink-400 bg-pink-400/10"
         class="btn btn-ghost btn-md rounded-full text-base-content hover:text-pink-400 hover:bg-pink-400/10 text-lg">Messages</a>
+      <a *appHasRole="['Admin', 'Moderator']" routerLink="/admin" routerLinkActive="text-pink-400 bg-pink-400/10"
+        class="btn btn-ghost btn-md rounded-full text-base-content hover:text-pink-400 hover:bg-pink-400/10 text-lg">Admin</a>
+      }
       <a routerLink="/errors" routerLinkActive="text-pink-400 bg-pink-400/10"
         class="btn btn-ghost btn-md rounded-full text-base-content hover:text-pink-400 hover:bg-pink-400/10 text-lg">Errors</a>
-      }
       @if (busyService.busyRequestCount() > 0) {
       <span class="loading loading-spinner text-accent"></span>
       }
