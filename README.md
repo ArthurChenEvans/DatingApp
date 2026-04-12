@@ -10,8 +10,6 @@ Browse members, send likes, chat in real time, and manage your profile — all i
 > - Admin: `admin@test.com` / `Pa$$w0rd`
 > - Or just register a new account!
 
----
-
 ## 📦 Technologies
 
 - **Backend**
@@ -29,8 +27,6 @@ Browse members, send likes, chat in real time, and manage your profile — all i
 - **Tools**
   - Git
   - Azure deployment
-
----
 
 ## ✨ Features
 
@@ -56,8 +52,6 @@ Browse members, send likes, chat in real time, and manage your profile — all i
 - **User management** — view and manage all registered user's roles
 - **Role editing** — assign and remove Moderator/Admin roles
 
----
-
 ## ⚠️ Known Limitations & Planned Improvements
 
 - Desktop only — mobile layout not yet implemented
@@ -65,8 +59,6 @@ Browse members, send likes, chat in real time, and manage your profile — all i
 - Validation error styling on the registration form needs polish
 - Photo management UI has room for improvement
 - Tested and working on **Chrome/Brave**, **Firefox/Zen**, and **Edge** — some styling issues observed on Opera and Opera GX (may be browser or device specific)
-
----
 
 ## 🖼️ Screenshots
 
@@ -112,8 +104,6 @@ Browse members, send likes, chat in real time, and manage your profile — all i
 ### Admin — Role Editing
 ![Admin role editing panel](images/readme/admin%20role%20editing.png)
 
----
-
 ## 🧠 Architecture Highlights
 
 - Pure **SPA architecture** — Angular frontend consuming a .NET Web API
@@ -122,8 +112,6 @@ Browse members, send likes, chat in real time, and manage your profile — all i
 - Repository pattern
 - EF Core with MSSQL, deployed to Azure
 - JWT authentication (course-mandated — see notes)
-
----
 
 ## 📝 Notes
 
@@ -144,8 +132,6 @@ In practice, JWTs make sense for **short-lived, single-use flows** — a passwor
 **Future projects will use session cookies.** 
 
 [Video where I learned this from](https://www.youtube.com/watch?v=JdGOb7AxUo0&t=12s)
-
----
 
 ## 💭 Planned Improvements
 
