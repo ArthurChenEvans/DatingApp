@@ -5,8 +5,7 @@ Browse members, send likes, chat in real time, and manage your profile — all i
 
 > **⚠️ No live demo available.** This project was hosted on Azure App Service during development,
 > but the free trial has since expired. Hosting a full-stack .NET + MSSQL application incurs ongoing
-> costs that aren't practical to maintain for a portfolio project. The repository, screenshots, and
-> README should give a thorough picture of the work involved.
+> costs that aren't practical to maintain for a portfolio project.
 
 ## 📦 Technologies
 
