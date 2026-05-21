@@ -3,12 +3,10 @@
 A full-stack dating application built with **.NET Web API**, **Angular**, and **SignalR**.
 Browse members, send likes, chat in real time, and manage your profile — all in a modern dark-themed SPA.
 
-🌐 **[Live Demo](https://da-2026-ae.azurewebsites.net/)** — hosted on Azure (free tier, allow a minute for the DB to wake up)
-
-> **Test accounts:**
-> - Regular user: `olivia.brown@example.com` / `Pa$$w0rd`
-> - Admin: `admin@test.com` / `Pa$$w0rd`
-> - Or just register a new account!
+> **⚠️ No live demo available.** This project was hosted on Azure App Service during development,
+> but the free trial has since expired. Hosting a full-stack .NET + MSSQL application incurs ongoing
+> costs that aren't practical to maintain for a portfolio project. The repository, screenshots, and
+> README should give a thorough picture of the work involved.
 
 ## 📦 Technologies
 
