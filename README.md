@@ -1,135 +1,77 @@
-# 💘 Real-time Dating App
+# Real-time Dating App
 
-A full-stack dating application built with **.NET Web API**, **Angular**, and **SignalR**.
-Browse members, send likes, chat in real time, and manage your profile — all in a modern dark-themed SPA.
+This is a full-stack dating app I built mainly to push my Angular further and to learn SignalR, specifically real-time messaging and presence tracking, which were the two things I had not done before. The backend is a .NET Web API, the front end is an Angular SPA, and the two talk over both HTTP and SignalR for the live features.
 
-> **⚠️ No live demo available.** This project was hosted on Azure App Service during development,
-> but the free trial has since expired. Hosting a full-stack .NET + MSSQL application incurs ongoing
-> costs that aren't practical to maintain for a portfolio project.
+> No live demo. It was hosted on Azure App Service during development, but the free trial expired and keeping a full .NET plus MSSQL app running costs more than a portfolio piece justifies. The screenshots below cover the actual functionality.
 
-## 📦 Technologies
+## What I was actually learning
 
-- **Backend**
-  - .NET Web API
-  - Entity Framework Core
-  - MSSQL Server
-  - ASP.NET Identity (role-based auth: User, Moderator, Admin)
-  - SignalR (real-time messaging & presence)
-  - Azure App Service (hosted)
+The brief I set myself was real-time behaviour, so that is where the interesting work is. Messages arrive through a SignalR hub and appear without a refresh, and member cards show live online/offline state through a presence hub that tracks connections as they open and close. Getting presence right was the harder of the two, because "online" is not a stored field, it is a function of which connections are currently live, and that has to survive reconnects and multiple tabs without lying about who is actually there.
 
-- **Frontend**
-  - Angular (SPA)
-  - Tailwind CSS
+The rest (role-based auth with Identity, the likes system, profile and photo management, an admin panel for roles) is more conventional CRUD, built to give the real-time features something real to sit on top of rather than as the focus.
 
-- **Tools**
-  - Git
-  - Azure deployment
+## On JWT authentication
 
-## ✨ Features
+This project uses JWT for authentication because the course required it. Having looked into it properly since, I think it was the wrong call for an app like this, and I will not repeat it. I am leaving the reasoning here because the decision is in the code and I would rather explain what I would change than pretend I would not change anything.
 
-### Member browsing
-- Browse all members with **filtering** by gender and minimum age
-- Real-time **presence indicator** on member cards (online/offline)
-- Detailed member profiles with photo galleries
+The problem is where the token has to live, and both options are bad.
 
-### Likes system
-- Like members you're interested in
-- Three views on the Likes page: **Who you like**, **Who liked you**, **Mutual matches**
+Store it in a cookie and you have reinvented the session cookie, except the token is far larger, carries the user's data on every request, and is much harder to revoke. You have added complexity and bandwidth and gained nothing over a plain session.
 
-### Real-time messaging
-- Full inbox powered by **SignalR** — messages appear instantly without page refresh
-- Conversation history per member
+Store it in localStorage and you have opened the door to XSS. localStorage is a plain JavaScript API, so any compromised third-party script on the page (a CDN, an analytics tag, a tracking pixel) can read it and exfiltrate the token. OWASP is explicit that sensitive data should not live there.
 
-### Profile management
-- Edit your profile details
-- Photo management with upload support
-- Set a main profile photo
+Revocation is the other half. Without a server-side blocklist, forcibly logging someone out means rotating the signing key, which logs everyone out. Add a blocklist to fix that and you are back to a database lookup on every request, which defeats the performance argument that was the reason to reach for JWTs in the first place.
 
-### Admin panel
-- **User management** — view and manage all registered user's roles
-- **Role editing** — assign and remove Moderator/Admin roles
+JWTs make sense for short-lived, single-use flows: a password reset link, an external login handoff between domains, anything consumed once and discarded. As a persistent session mechanism for a web app, they are a misuse of the format. Future projects use session cookies.
 
-## ⚠️ Known Limitations & Planned Improvements
+[The video where this clicked for me](https://www.youtube.com/watch?v=JdGOb7AxUo0&t=12s)
 
-- Desktop only — mobile layout not yet implemented
-- Photo upload currently only supports drag and drop (click-to-upload coming)
-- Validation error styling on the registration form needs polish
-- Photo management UI has room for improvement
-- Tested and working on **Chrome/Brave**, **Firefox/Zen**, and **Edge** — some styling issues observed on Opera and Opera GX (may be browser or device specific)
+## Tech
 
-## 🖼️ Screenshots
+Backend: .NET Web API, EF Core, MSSQL, ASP.NET Identity (User / Moderator / Admin roles), and SignalR for messaging and presence. Front end: Angular with Tailwind CSS. It was deployed to Azure App Service while the trial lasted.
 
-### Member Browse — Unfiltered
+## What it does
+
+Members can browse everyone with filtering by gender and minimum age, with a live presence indicator on each card, and open detailed profiles with photo galleries. The likes system has three views: who you like, who liked you, and mutual matches. Messaging is a full inbox over SignalR with per-member conversation history. Profile management covers editing details, uploading and managing photos, and setting a main photo. The admin panel handles viewing users and assigning or removing Moderator and Admin roles.
+
+## Known limitations
+
+Desktop only and the mobile layout is not done. Photo upload is drag-and-drop only so far (click-to-upload is on the list). The registration form's validation error styling needs polish, and the photo management UI has room to improve. Tested and working on Chrome/Brave and Firefox/Zen.
+
+## Screenshots
+
+### Browse: unfiltered
 ![All members browse view](images/readme/screen1.png)
-
 ![All members browse view 2](images/readme/screen2.png)
 
-### Member Browse — Filtered
+### Browse: filtered
 ![Female only, minimum age 40](images/readme/female%20only%20min%20age%2040.png)
-
 ![Male only](images/readme/male-only.png)
 
-### Likes — Who You Like
+### Likes: who you like
 ![Members you have liked](images/readme/liked-example.png)
 
-### Likes — Who Liked You
+### Likes: who liked you
 ![Members who liked you](images/readme/liked-me.png)
 
-### Likes — Mutual Matches
+### Likes: mutual matches
 ![Mutual matches](images/readme/mutual.png)
 
 ### Messaging
 ![Message conversation example](images/readme/message-example.png)
-
 ![Message conversation example 2](images/readme/message-example2.png)
 
-### Member Profile
+### Member profile
 ![Member profile view](images/readme/profile.png)
 
-### Profile — Edit
+### Profile: edit
 ![Edit profile details](images/readme/profile-edit.png)
 
-### Profile — Photos
+### Profile: photos
 ![Profile photo management](images/readme/profile-photos.png)
 
-### Admin — User Management
+### Admin: user management
 ![Admin user management panel](images/readme/admin%20user%20management.png)
 
-### Admin — Role Editing
+### Admin: role editing
 ![Admin role editing panel](images/readme/admin%20role%20editing.png)
-
-## 🧠 Architecture Highlights
-
-- Pure **SPA architecture** — Angular frontend consuming a .NET Web API
-- **SignalR hubs** for real-time chat and online presence tracking
-- **Role-based authorisation** via ASP.NET Identity (User / Moderator / Admin)
-- Repository pattern
-- EF Core with MSSQL, deployed to Azure
-- JWT authentication (course-mandated — see notes)
-
-## 📝 Notes
-
-### On JWT Authentication
-
-This project uses JWT for authentication because the course required it. In hindsight, and having looked into this more deeply, I think this was the wrong call for a web application like this — and I won't be repeating it.
-
-The core problem is where JWTs end up being stored. You have two options and both are bad:
-
-**Store in a cookie** — now you have basically reinvented session cookies, except with a token that's ~75x larger, carries all the user's data around on every request, and is significantly harder to revoke. You haven't gained anything over a plain session cookie except complexity and bandwidth.
-
-**Store in localStorage** — this sidesteps the cookie problem but opens you up to XSS (cross-site scripting) attacks. localStorage is a pure JavaScript API, which means any malicious or compromised third-party script on your page — a CDN, an analytics tool, a tracking pixel — can read everything in it and exfiltrate your tokens. OWASP explicitly recommends never storing sensitive information in localStorage for this reason.
-
-The revocation problem is also significant. If a token is compromised or a user needs to be forcibly logged out, your only real option without a server-side blocklist is to rotate the signing key — which logs *everyone* out. If you implement a blocklist to get around this, you've just re-centralised everything and you're now making a database call on every request anyway, which completely defeats the stated performance benefit of JWTs.
-
-In practice, JWTs make sense for **short-lived, single-use flows** — a password reset link in an email, an external login handoff between domains, anything that is consumed once and immediately discarded. That is what the spec was actually designed for. Using them as a persistent session mechanism for a web application is a misuse of the format that the security industry popularised largely for marketing reasons.
-
-**Future projects will use session cookies.** 
-
-[Video where I learned this from](https://www.youtube.com/watch?v=JdGOb7AxUo0&t=12s)
-
-## 💭 Planned Improvements
-
-- Click-to-upload photos (currently drag and drop only)
-- Mobile responsive layout
-- Registration form validation error styling
-- Photo management admin addition
